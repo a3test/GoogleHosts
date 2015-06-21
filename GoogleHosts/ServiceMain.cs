@@ -37,6 +37,8 @@ namespace GoogleHosts
 
         private void MainProcess()
         {
+            _log.Write("服务启动");
+
             EasyWebRequest request = new EasyWebRequest();
             string html = "";
             string file = "";
