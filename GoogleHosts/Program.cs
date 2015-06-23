@@ -11,7 +11,7 @@ namespace GoogleHosts
         {
             if (args.Length > 0 && args[0].ToLower() == "service") //service
             {
-                ServiceBase[] ServicesToRun = { new ServiceMain() };
+                ServiceBase[] ServicesToRun = {new ServiceMain()};
                 ServiceBase.Run(ServicesToRun);
             }
             else //console
@@ -106,7 +106,7 @@ namespace GoogleHosts
                 else
                 {
                     Console.WriteLine("无法识别的输入\r\n");
-                    Main(new[] { "" });
+                    Main(new[] {""});
                 }
             }
         }
