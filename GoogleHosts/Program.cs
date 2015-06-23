@@ -24,11 +24,12 @@ namespace GoogleHosts
                 Process p;
 
                 Console.WriteLine("-----------服务管理程序，请输入对应的数字-----------");
-                Console.WriteLine("[1]安装服务");
-                Console.WriteLine("[2]启动服务");
-                Console.WriteLine("[3]停止服务");
-                Console.WriteLine("[4]卸载服务");
-                Console.WriteLine("[5]退出");
+                Console.WriteLine("[1]执行一次");
+                Console.WriteLine("[2]安装服务");
+                Console.WriteLine("[3]启动服务");
+                Console.WriteLine("[4]停止服务");
+                Console.WriteLine("[5]卸载服务");
+                Console.WriteLine("[6]退出");
                 string rl = Console.ReadLine();
                 int i;
                 if (int.TryParse(rl, out i))
@@ -36,6 +37,11 @@ namespace GoogleHosts
                     switch (i)
                     {
                         case 1:
+                            Hosts hosts = new Hosts();
+                            hosts.MainProcess();
+                            Console.WriteLine(hosts.Message);
+                            break;
+                        case 2:
                             string path = Process.GetCurrentProcess().MainModule.FileName + " service";
                             const string displayName = "Google Hosts Update";
                             psi.FileName = "sc";
@@ -50,7 +56,7 @@ namespace GoogleHosts
                                 }
                             }
                             break;
-                        case 2:
+                        case 3:
                             psi.FileName = "net";
                             psi.Arguments = string.Format("start {0}", serviceName);
                             p = Process.Start(psi);
@@ -63,7 +69,7 @@ namespace GoogleHosts
                                 }
                             }
                             break;
-                        case 3:
+                        case 4:
                             psi.FileName = "net";
                             psi.Arguments = string.Format("stop {0}", serviceName);
                             p = Process.Start(psi);
@@ -76,7 +82,7 @@ namespace GoogleHosts
                                 }
                             }
                             break;
-                        case 4:
+                        case 5:
                             psi.FileName = "sc";
                             psi.Arguments = string.Format("delete {0}", serviceName);
                             p = Process.Start(psi);
@@ -89,7 +95,7 @@ namespace GoogleHosts
                                 }
                             }
                             break;
-                        case 5:
+                        case 6:
                             return;
                         default:
                             Console.WriteLine("无法识别的输入\r\n");
