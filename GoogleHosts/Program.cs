@@ -106,6 +106,7 @@ namespace GoogleHosts
                 else
                 {
                     Console.WriteLine("无法识别的输入\r\n");
+                    Main(new[] { "" });
                 }
             }
         }

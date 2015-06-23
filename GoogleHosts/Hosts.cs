@@ -7,7 +7,7 @@ namespace GoogleHosts
     public class Hosts
     {
         private const string HostFileUrl = "http://www.360kb.com/kb/2_122.html";
-        private const string HostsFilePath = @"C:\Windows\System32\drivers\etc\hosts";
+        private readonly string _hostsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.System) + @"\drivers\etc\hosts";
 
         private Log _log = new Log();
 
@@ -22,7 +22,7 @@ namespace GoogleHosts
             {
                 html = request.Request(HostFileUrl, RequestMethod.GET);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Message = "获取网页源码时异常-" + ex.Message;
                 _log.Write(Message);
@@ -31,7 +31,7 @@ namespace GoogleHosts
 
             try
             {
-                using (FileStream fileStream = new FileStream(HostsFilePath, FileMode.Open))
+                using (FileStream fileStream = new FileStream(_hostsFilePath, FileMode.Open))
                 {
                     using (StreamReader sr = new StreamReader(fileStream))
                     {
@@ -60,7 +60,7 @@ namespace GoogleHosts
                         string hostsl = Regex.Match(file, pattern).ToString();
                         if (string.IsNullOrWhiteSpace(hostsl))
                         {
-                            using (StreamWriter sw = new StreamWriter(HostsFilePath, true))
+                            using (StreamWriter sw = new StreamWriter(_hostsFilePath, true))
                             {
                                 sw.WriteLine();
                                 sw.WriteLine();
@@ -71,7 +71,7 @@ namespace GoogleHosts
                         }
                         else
                         {
-                            using (StreamWriter sw = new StreamWriter(HostsFilePath, false))
+                            using (StreamWriter sw = new StreamWriter(_hostsFilePath, false))
                             {
                                 sw.Write(file.Replace(hostsl, hostsr));
                             }
