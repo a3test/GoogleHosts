@@ -15,12 +15,9 @@ namespace GoogleHosts
 
         public void MainProcess()
         {
-            Message = "执行";
-            _log.Write(Message);
-
             EasyWebRequest request = new EasyWebRequest();
-            string html = "";
-            string file = "";
+            string html;
+            string file;
             try
             {
                 html = request.Request(HostFileUrl, RequestMethod.GET);
@@ -90,7 +87,7 @@ namespace GoogleHosts
                 }
                 else
                 {
-                    Message = "相关Google hosts已经是最新,不需要更新";
+                    Message = string.IsNullOrWhiteSpace(Message) ? "相关Google hosts已经是最新,不需要更新" : Message;
                     _log.Write(Message);
                 }
             }
@@ -137,15 +134,18 @@ namespace GoogleHosts
                             }
                             return false;
                         }
-                        _log.Write("转换本机hosts中的日期为DateTime时出错");
+                        Message = "转换本机hosts中的日期为DateTime时出错";
+                        _log.Write(Message);
                         return false;
                     }
                     return true;
                 }
-                _log.Write("转换网页源码中的日期为DateTime时出错");
+                Message = "转换网页源码中的日期为DateTime时出错";
+                _log.Write(Message);
                 return false;
             }
-            _log.Write("解析网页源码中的日期时异常");
+            Message = "解析网页源码中的日期时异常";
+            _log.Write(Message);
             return false;
         }
     }
